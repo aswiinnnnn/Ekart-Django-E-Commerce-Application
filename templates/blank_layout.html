@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ekart | Ecommerce Website Design</title>
     {% load static %}
-    
+
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -16,33 +16,22 @@
 <body>
     <!-- Header -->
 
-<div class="header">
-    <div class="container">
+    <div class="header">
+        <div class="container">
 
-        {% include 'menu.html' %}
+            {% include 'menu.html' %}
 
-        {% block banner %}
+            {% block banner %}
 
-        {% endblock banner %}
+            {% endblock banner %}
+        </div>
     </div>
-</div>
-
-
-     
-
-    
 
     <!-- Feadtued Categories -->
 
     {% block categories %}
 
-
-   
-
-
     {% endblock categories %}
-
-
 
     <!-- Footer -->
     <div class="footer">
@@ -90,11 +79,11 @@
     <script>
         var MenuItems = document.getElementById("MenuItems");
         MenuItems.style.maxHeight = "0px";
+
         function menutoggle() {
             if (MenuItems.style.maxHeight == "0px") {
                 MenuItems.style.maxHeight = "200px"
-            }
-            else {
+            } else {
                 MenuItems.style.maxHeight = "0px"
             }
         }
