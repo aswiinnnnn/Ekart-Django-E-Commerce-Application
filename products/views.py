@@ -11,7 +11,7 @@ def list_products(request):
     # For now, we'll just render a placeholder template
     return render(request, 'products.html')
 
-def detail_products(request, product_id):
+def detail_products(request):
     # Here you would typically fetch the product from the database using the product_id
     # For now, we'll just render a placeholder template
-    return render(request, 'product_detail.html', {'product_id': product_id})
+    return render(request, 'product_detail.html')
