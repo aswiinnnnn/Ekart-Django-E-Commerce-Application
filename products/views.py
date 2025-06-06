@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from . models import Product  # Assuming you have a Product model defined in models.py
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required(login_url='account')  # Ensure the user is logged in to access this view
 def index(request):
     freatured_products = roducts = Product.objects.order_by("-priority")[:8]  # Fetch the top 8 products based on priority
     latest_products = roducts = Product.objects.order_by("-id")[:8]  # Fetch the latest 8 products

@@ -8,6 +8,16 @@
                </div>
                <div class="col-2">
                    <div class="form-container">
+                        {% if messages %}
+                        <div class="alert alert-info">
+                            <ul>
+                                {% for message in messages %}
+                                    <li>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+
                        <div class="form-btn">
                            <span onclick="login()">Login</span>
                            <span onclick="register()">Register</span>
