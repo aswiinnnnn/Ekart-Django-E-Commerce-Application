@@ -13,7 +13,7 @@
         <div class="row">
             {%  for product in product_chunks %}
             <div class="col-4">
-                <a href="{% url 'detail_products'  %}"><img src="{{ product.image.url }}"></a>
+                <a href="{% url 'detail_products' product.id %}"><img src="{{ product.image.url }}"></a>
                 <h4>{{ product.title }}</h4>
                 
                 <p>$ {{product.price}}</p>
@@ -26,17 +26,27 @@
 
         <div class="page-btn">
             {% if products.has_previous %}
-            <a href="?page={{ products.previous_page_number }}"><span>&#8592;</span></a>
+                <a href="?page={{ products.previous_page_number }}"><span>&#8592;</span></a>
             {% endif %}
 
             {% for i in products.paginator.page_range %}
-            <a href="?page={{i}}"><span>{{i}}</span></a>
+                {% if i == 1 or i == 2 or i == products.paginator.num_pages|add:'-1' or i == products.paginator.num_pages %}
+                    <a href="?page={{i}}"><span{% if products.number == i %} style="font-weight:bold;"{% endif %}>{{i}}</span></a>
+                {% elif i >= products.number|add:'-2' and i <= products.number|add:'2' %}
+                    <a href="?page={{i}}"><span{% if products.number == i %} style="font-weight:bold;"{% endif %}>{{i}}</span></a>
+                {% elif i == 3 and products.number > 5 %}
+                    <span>...</span>
+                {% elif i == products.number|add:'-3' and i > 4 %}
+                    <span>...</span>
+                {% elif i == products.number|add:'3' and i < products.paginator.num_pages|add:'-3' %}
+                    <span>...</span>
+                {% elif i == products.paginator.num_pages|add:'-2' and products.number < products.paginator.num_pages|add:'-4' %}
+                    <span>...</span>
+                {% endif %}
             {% endfor %}
-            
+
             {% if products.has_next %}
-            <a href="?page={{ products.next_page_number }}"><span>&#8594;</span></a>
+                <a href="?page={{ products.next_page_number }}"><span>&#8594;</span></a>
             {% endif %}
-
-
         </div>
     </div>
