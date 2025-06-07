@@ -6,6 +6,7 @@ from django.contrib import messages
 
 # Create your views here.
 def account(request):
+    context = {}
 
     if request.method == 'POST' and "login" in request.POST:
         username = request.POST.get('username')
@@ -16,6 +17,8 @@ def account(request):
             return redirect('index')
         else:
             messages.error(request, "Invalid username or password.")
+            context['register'] = False
+
 
     elif request.method == 'POST' and "register" in request.POST:
         username = request.POST.get('username')
@@ -26,18 +29,15 @@ def account(request):
 
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists. Please choose another.")
+            context['register'] = True
         else:
             user = User.objects.create_user(username=username, password=password, email=email)
             customer = Customer(user=user, address=address, phone=phone)
             customer.save()
-            return redirect('index')
+            messages.success(request, "Registration successful. You can now log in.")
+            context['register'] = False
         
-   
-
-
-        
-        
-    return render(request, 'account.html')
+    return render(request, 'account.html', context)
 
 def logout_view(request):
     logout(request)

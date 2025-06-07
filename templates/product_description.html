@@ -26,6 +26,8 @@
                 <p>Home / {{product.title}}</p>
                 <h1>{{product.title}}</h1>
                 <h4>${{product.price}}</h4>
+                <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <select>
                     <option>Select Size</option>
                     <option>XXL</option>

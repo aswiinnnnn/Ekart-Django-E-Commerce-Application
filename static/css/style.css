@@ -500,3 +500,44 @@ form a{
         display: none;
     }
 }
+
+.alert-messages {
+    margin-bottom: 20px;
+}
+.alert-message {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(90deg, #ff5858 0%, #f09819 100%);
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(255,88,88,0.08);
+    position: relative;
+    animation: fadeIn 0.5s;
+}
+.alert-message-success {
+    background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+    color: #222;
+}
+.alert-icon {
+    font-size: 1.3em;
+    margin-right: 10px;
+}
+.alert-text {
+    flex: 1;
+}
+.alert-close {
+    cursor: pointer;
+    font-size: 1.3em;
+    margin-left: 12px;
+    transition: color 0.2s;
+}
+.alert-close:hover {
+    color: #222;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px);}
+    to { opacity: 1; transform: translateY(0);}
+}

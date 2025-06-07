@@ -33,8 +33,22 @@ class OrderedItem(models.Model):
     LIVE = 1
     DELETE = 0
     DELETE_CHOICES = ((LIVE, 'Live'), (DELETE, 'Delete'),)
+
+    small = 1
+    medium = 2
+    large = 3
+    x_large = 4
+    xx_large = 5
+    SIZE_CHOICES = (
+        (small, 'Small'),
+        (medium, 'Medium'),
+        (large, 'Large'),
+        (x_large, 'X-Large'),
+        (xx_large, 'XX-Large'),
+    )
     
     
     product = models.ForeignKey(Product, on_delete=models.SET_NULL,null=True, related_name='cart_items')
     quantity = models.PositiveIntegerField(default=1)
+    size = models.IntegerField(choices=SIZE_CHOICES, default=medium)
     owner = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='added_items')
