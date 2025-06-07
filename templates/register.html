@@ -34,17 +34,6 @@
                </div>
            </div>
        </div>
-        {% if messages %}
-        <div class="alert-messages">
-            {% for message in messages %}
-                <div class="alert-message {% if message.tags %}alert-message-{{ message.tags }}{% endif %}">
-                    <span class="alert-icon">&#9888;</span>
-                    <span class="alert-text">{{ message }}</span>
-                    <span class="alert-close" onclick="this.parentElement.style.display='none';">&times;</span>
-                </div>
-            {% endfor %}
-        </div>
-        {% endif %}
 
    </div>
 

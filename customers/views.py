@@ -14,6 +14,7 @@ def account(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            messages.success(request, "Login successful.")
             return redirect('index')
         else:
             messages.error(request, "Invalid username or password.")
