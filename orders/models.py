@@ -23,7 +23,7 @@ class Order(models.Model):
     )
 
     order_status = models.IntegerField(choices=STATUS_CHOICES, default=CART_STAGE)
-    owner = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, related_name='added_carts')
+    owner = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, related_name='orders')
     delete_status = models.IntegerField(choices=DELETE_CHOICES, default=LIVE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

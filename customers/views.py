@@ -32,7 +32,7 @@ def account(request):
             context['register'] = True
         else:
             user = User.objects.create_user(username=username, password=password, email=email)
-            customer = Customer(user=user, address=address, phone=phone)
+            customer = Customer(user=user, name=username, address=address, phone=phone, email=email)
             customer.save()
             messages.success(request, "Registration successful. You can now log in.")
             context['register'] = False
