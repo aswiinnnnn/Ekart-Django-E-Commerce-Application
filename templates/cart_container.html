@@ -1,52 +1,83 @@
 {% load static %}
+{% load multiply %}
 
 <div class="small-container cart-page">
-    <table>
-        <tr>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-        </tr>
-        {% for cart_item in cart.added_items.all %}
-        <tr>
-            <td>
-                <div class="cart-info">
-                    <img src="{{ cart_item.product.image.url }}" alt="{{ cart_item.product.name }}">
-                    <div>
-                        <p>{{ cart_item.product.title }}</p>
-                        <small>Price: ${{ cart_item.product.price }}</small>
-                        <br>
-                        <form action="{% url 'remove_from_cart' cart_item.id %}" method="POST" style="display: inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn">Remove</button>
-                        </form>
+    {% if cart.added_items.all %}    
+  
+
+    <div class="cart-table-wrapper">
+        <table class="cart-table">
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+            {% for cart_item in cart.added_items.all %}
+            <tr>
+                <td>
+                    <div class="cart-info">
+                        <img src="{{ cart_item.product.image.url }}" alt="{{ cart_item.product.name }}">
+                        <div class="cart-item-details">
+                            <h4>{{ cart_item.product.title }}</h4>
+                            <p class="price">${{ cart_item.product.price }}</p>
+                            <form action="{% url 'remove_from_cart' cart_item.id %}" method="POST" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="remove-btn">
+                                    <i class="fa-solid fa-trash"></i> Remove
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </td>
-            <td><input type="number" value="{{ cart_item.quantity }}" min="1"></td>
-            <td>${{ cart_item.product.price|floatformat:2 }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    
-    <div class="total-price">
-        <table>
-            <tr>
-                <td>Subtotal</td>
-                <td>${{ total_price|floatformat:2 }}</td>
+                </td>
+                <td>
+                    <div class="quantity-control">
+                        <input type="number" value="{{ cart_item.quantity }}" min="1" class="quantity-input">
+                    </div>
+                </td>
+                <td class="subtotal">${{ cart_item.product.price|multiply:cart_item.quantity|floatformat:2 }}</td>
             </tr>
-            <tr>
-                <td>Tax</td>
-                <td>${{ tax|floatformat:2 }}</td>
+            {% endfor %}
+            <tr class="summary-row">
+                <td colspan="2" class="summary-label">Subtotal</td>
+                <td class="summary-value">${{ total_price|floatformat:2 }}</td>
             </tr>
-            <tr>
-                <td>Total</td>
-                <td>${{ final_price|floatformat:2 }}</td>
+            <tr class="summary-row">
+                <td colspan="2" class="summary-label">Tax</td>
+                <td class="summary-value">${{ tax|floatformat:2 }}</td>
             </tr>
-            <tr>
-                <td></td>
-                <td colspan="2"><a href="" class="btn">Checkout</a></td>
+            <tr class="total-row">
+                <td colspan="2" class="summary-label">Total</td>
+                <td class="summary-value">${{ final_price|floatformat:2 }}</td>
+            </tr>
+            <tr class="checkout-row">
+                <td colspan="3" class="checkout-cell">
+                    <a href="" class="btn checkout-btn">
+                        <i class="fa-solid fa-lock"></i>
+                        Checkout
+                    </a>
+                </td>
             </tr>
         </table>
     </div>
+
+    {% else %}
+    <div class="empty-cart">
+        <div class="empty-cart-content">
+            <div class="empty-cart-image">
+                <img src="{% static 'images/empty-cart.svg' %}" alt="Empty Cart" class="cart-illustration">
+            </div>
+            <h2>Your cart is empty</h2>
+            <p>Looks like you haven't added any items to your cart yet.</p>
+            <div class="empty-cart-actions">
+                <a href="{% url 'list_products' %}" class="btn btn-primary">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    Continue Shopping
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
+
+
+

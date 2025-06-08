@@ -47,8 +47,7 @@ class OrderedItem(models.Model):
         (xx_large, 'XX-Large'),
     )
     
-    
     product = models.ForeignKey(Product, on_delete=models.SET_NULL,null=True, related_name='cart_items')
     quantity = models.PositiveIntegerField(default=1)
-    size = models.IntegerField(choices=SIZE_CHOICES, default=medium)
+    size = models.IntegerField(choices=SIZE_CHOICES, null=True, blank=True)
     owner = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='added_items')

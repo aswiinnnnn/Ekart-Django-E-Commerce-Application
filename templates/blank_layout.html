@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,20 +6,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ekart | Ecommerce Website Design</title>
-    {% load static %}
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
-    <!-- Header -->
-
     <div class="header">
         <div class="container">
-
             {% include 'menu.html' %}
 
             {% block banner %}
@@ -86,6 +83,14 @@
             } else {
                 MenuItems.style.maxHeight = "0px"
             }
+        }
+
+        function toggleMenu() {
+            const menuItems = document.getElementById('MenuItems');
+            const menuIcon = document.querySelector('.menu-icon');
+            
+            menuItems.classList.toggle('active');
+            menuIcon.classList.toggle('active');
         }
     </script>
 

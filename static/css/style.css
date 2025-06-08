@@ -13,6 +13,7 @@ body{
     display: flex;
     align-items: center;
     padding: 20px;
+    position: relative;
 }
 
 nav{
@@ -247,10 +248,19 @@ ul{
 .copyright{
     text-align: center;
 }
-.menu-icon{
-    width: 28px;
-    margin-left: 20px;
+.menu-icon {
     display: none;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.menu-icon span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #333;
+    margin: 5px 0;
+    transition: all 0.3s ease;
 }
 
 /* All Products */
@@ -328,56 +338,337 @@ input:focus{
     cursor: pointer;
 }
 
-/* Cart Items */
-.cart-page{
-    margin: 80px auto;
+/* Cart Page Styles */
+.cart-page {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+    margin: 40px auto;
 }
-table{
+
+.cart-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.cart-header h2 {
+    color: #2c3e50;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.cart-subtitle {
+    color: #64748b;
+    font-size: 16px;
+}
+
+.cart-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 30px;
+}
+
+.cart-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
-.cart-info{
-    display: flex;
-    flex-wrap: wrap;
-}
-th{
+
+.cart-table th {
     text-align: left;
-    padding: 5px;
+    padding: 15px;
     color: #fff;
     background: #ff523b;
-    font-weight: normal;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.5px;
 }
-td{
-    padding: 10px 5px;
+
+.cart-table th:first-child {
+    border-top-left-radius: 8px;
 }
-td input{
-    width: 40px;
-    height: 30px;
-    padding: 5px;
+
+.cart-table th:last-child {
+    border-top-right-radius: 8px;
 }
-td a{
-    color: #ff523b;
-    font-size: 12px;
+
+.cart-table td {
+    padding: 20px 15px;
+    border-bottom: 1px solid #f0f0f0;
 }
-td img{
-    width: 80px;
-    height: 80px;
-    margin-right: 10px;
-}
-.total-price{
+
+.cart-info {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
 }
-.total-price table{
-    border-top: 3px solid #ff523b;
-    width: 100%;
-    max-width: 400px;
+
+.cart-info img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
-td:last-child{
+
+.cart-item-details {
+    flex: 1;
+}
+
+.cart-item-details h4 {
+    color: #2c3e50;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.price {
+    color: #ff523b;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s ease;
+}
+
+.remove-btn:hover {
+    color: #ff523b;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-input {
+    width: 60px;
+    height: 40px;
+    padding: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.quantity-input:focus {
+    border-color: #ff523b;
+    box-shadow: 0 0 0 2px rgba(255, 82, 59, 0.1);
+    outline: none;
+}
+
+.subtotal {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Summary Rows Styling */
+.summary-row {
+    background: #fafbfc;
+}
+
+.summary-row:last-of-type {
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.summary-label {
     text-align: right;
+    color: #64748b;
+    font-weight: 500;
 }
-th:last-child{
+
+.summary-value {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.total-row {
+    background: #fff5f5;
+}
+
+.total-row .summary-label,
+.total-row .summary-value {
+    color: #ff523b;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.checkout-row {
+    background: #ffffff;
+    border-bottom: none;
+}
+
+.checkout-cell {
     text-align: right;
+    padding: 20px 10px 10px 0;
+}
+
+.checkout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 30%;
+    margin: 0;
+    padding: 10px 10px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    box-shadow: 0 2px 8px rgba(255, 82, 59, 0.1);
+    border-radius: 6px;
+    background: #ff523b;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.checkout-btn:hover {
+    background: #ff6b6b;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgb(248, 29, 0);
+}
+
+.checkout-btn i {
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 20px 20px;
+    background: linear-gradient(145deg, #ffffff, #fff5f5);
+    border-radius: 16px;
+    margin: 0px 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.empty-cart-content {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.empty-cart-image {
+    margin-bottom: 40px;
+}
+
+.cart-illustration {
+    width: 220px;
+    height: auto;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 4px 12px rgba(255, 82, 59, 0.15));
+}
+
+.empty-cart h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.empty-cart p {
+    color: #64748b;
+    margin-bottom: 35px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.empty-cart-actions {
+    margin-top: 25px;
+}
+
+.empty-cart .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    background: #ff523b;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255, 82, 59, 0.15);
+}
+
+.empty-cart .btn i {
+    font-size: 20px;
+}
+
+.empty-cart .btn:hover {
+    background: #ff6b6b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 82, 59, 0.2);
+}
+
+@media (max-width: 768px) {
+    .cart-page {
+        padding: 20px;
+        margin: 20px auto;
+    }
+
+    .empty-cart {
+        padding: 50px 20px;
+    }
+    
+    .cart-illustration {
+        width: 180px;
+    }
+    
+    .empty-cart h2 {
+        font-size: 26px;
+    }
+
+    .cart-info {
+        gap: 10px;
+    }
+
+    .cart-info img {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-page {
+        padding: 15px;
+    }
+
+    .cart-table th, 
+    .cart-table td {
+        padding: 12px 10px;
+        font-size: 14px;
+    }
+
+    .cart-info img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .empty-cart .btn {
+        padding: 14px 28px;
+        font-size: 15px;
+    }
 }
 
 /* Account page */
@@ -526,5 +817,132 @@ form a{
     .simple-form-row {
         flex-direction: column;
         gap: 8px;
+    }
+}
+
+/* Mobile Navigation Styles - Start */
+@media (max-width: 768px) {
+    /* Main Navbar adjustments for mobile */
+    .navbar {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        position: relative; /* Essential for positioning the dropdown */
+        justify-content: space-between; /* Pushes logo left, icons right */
+    }
+    .navbar .logo {
+        flex-shrink: 0; /* Prevent logo from shrinking */
+    }
+    /* Order elements within the navbar for correct mobile layout */
+    .navbar nav {
+        order: 1; /* Keep nav in logical order */
+        flex-grow: 1; /* Allows nav to take available space */
+        text-align: right; /* Aligns content within nav to the right */
+        position: relative; /* Crucial: Make nav a positioned parent for nav ul */
+    }
+    .navbar .cart-icon {
+        order: 2;
+        margin-right: 20px; /* Standard spacing for cart icon */
+    }
+    .navbar .menu-icon {
+        order: 3; /* Positions menu icon last */
+        margin-left: 15px; /* Spacing between cart and menu icon */
+    }
+
+    /* Hamburger Menu Icon Styling */
+    .menu-icon {
+        display: block; /* Always show hamburger icon on mobile */
+        position: relative;
+        z-index: 1001; /* Ensure it's clickable */
+        cursor: pointer;
+        background: #ffffff; /* Solid background for the icon button */
+        padding: 10px; /* Padding to make it a nice square/circle */
+        border-radius: 8px; /* Slightly rounded corners */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    }
+    .menu-icon span {
+        display: block;
+        width: 25px; /* Width of each bar */
+        height: 2px; /* Thickness of each bar */
+        background: #333; /* Color of the bars */
+        margin: 5px 0; /* Spacing between bars */
+        transition: all 0.3s ease; /* Smooth transition for transformation */
+        border-radius: 1px; /* Slightly rounded bar ends */
+    }
+    /* Transform hamburger icon to 'X' when active */
+    .menu-icon.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    .menu-icon.active span:nth-child(2) {
+        opacity: 0; /* Hide middle bar */
+    }
+    .menu-icon.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* Mobile Menu (Dropdown) Styling */
+    nav ul {
+        display: none; /* Hidden by default */
+        position: absolute; /* Position relative to its parent `nav` */
+        top: 60px; /* Explicitly place it 60px from the top of its parent `nav` */
+        right: 0; /* Align to the right of the `nav` element */
+        background: #ffffff; /* **Solid white background for the popup** */
+        width: 100%; /* Take full width of the `nav` element */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Modern, clear shadow */
+        padding: 15px 0; /* Vertical padding for the entire menu */
+        margin: 0;
+        border-radius: 0 0 12px 12px; /* Rounded bottom corners for a soft look */
+        z-index: 999; /* Ensure it appears above page content */
+        max-height: 0; /* For slide-down animation */
+        overflow: hidden; /* Hide overflow when collapsed */
+        transition: max-height 0.3s ease-in-out; /* Smooth slide transition */
+    }
+    nav ul.active {
+        display: block; /* Show when the 'active' class is applied */
+        max-height: 300px; /* Expand to show content, adjust if needed */
+    }
+
+    /* Individual Menu Item Styling */
+    nav ul li {
+        display: block; /* Each menu item on its own line */
+        margin: 0;
+        padding: 12px 20px; /* Padding for each list item */
+        text-align: left; /* Align text to the left within the menu */
+        border-bottom: 1px solid #eee; /* Light border between items for clarity */
+    }
+    nav ul li:last-child {
+        border-bottom: none; /* No border for the last item */
+    }
+    nav ul li a {
+        color: #333; /* Dark text color for readability */
+        font-size: 16px; /* Appropriate font size */
+        text-decoration: none; /* Remove underline */
+        display: block; /* Make the whole link clickable */
+        width: 100%;
+        padding: 5px 0; /* Add padding to links for better click area */
+    }
+    nav ul li a:hover {
+        color: #ff523b; /* Accent color on hover */
+        background-color: #f8f8f8; /* Light background on hover */
+    }
+}
+/* Mobile Navigation Styles - End */
+
+.cart-icon {
+    margin-left: 20px;
+    position: relative;
+}
+
+.cart-icon img {
+    transition: transform 0.3s ease;
+}
+
+.cart-icon:hover img {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .cart-icon {
+        margin-right: 50px;
     }
 }

@@ -60,19 +60,43 @@ def add_to_cart(request):
         customer = user.customer_profile
         product_id = request.POST.get('product_id')
         quantity = int(request.POST.get('quantity', 1))
-        size = int(request.POST.get('size', 2))
+        size = request.POST.get('size')  # Get size as string first
+        
+        # Convert size to integer if provided, otherwise keep as None
+        size = int(size) if size else None
         
         cart_obj, created = Order.objects.get_or_create(
             owner=customer, 
             order_status=Order.CART_STAGE
         )
-        
-        ordered_item = OrderedItem.objects.create(
-            product_id=product_id,
-            quantity=quantity,
-            size=size,
-            owner=cart_obj
-        )
+
+        # Check if the item already exists in cart
+        try:
+            # If size is None, only check product_id
+            if size is None:
+                ordered_item = OrderedItem.objects.get(
+                    owner=cart_obj,
+                    product_id=product_id,
+                    size__isnull=True
+                )
+            else:
+                ordered_item = OrderedItem.objects.get(
+                    owner=cart_obj,
+                    product_id=product_id,
+                    size=size
+                )
+            # Update quantity if item exists
+            ordered_item.quantity += quantity
+            ordered_item.save()
+        except OrderedItem.DoesNotExist:
+            # Create new item if it doesn't exist
+            ordered_item = OrderedItem.objects.create(
+                product_id=product_id,
+                quantity=quantity,
+                size=size,
+                owner=cart_obj
+            )
+
         messages.success(request, "Item added to cart successfully.")
         return redirect('cart')
     
@@ -95,3 +119,16 @@ def remove_from_cart(request, item_id):
         return redirect('account')
     
     return redirect('cart')
+
+
+@login_required(login_url='account')
+def checkout(request):
+    if request.method == 'POST':
+        user = request.user
+        customer = user.customer_profile
+        total = int(request.POST.get(total))
+        cart_obj= Order.objects.get(
+                owner=customer,
+                
+            )
+            
