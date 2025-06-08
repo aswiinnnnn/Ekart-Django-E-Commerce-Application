@@ -1,0 +1,47 @@
+{% extends 'blank_layout.html' %}
+{% load static %}
+
+{% block categories %}
+<div class="small-container" style="padding: 50px 0;">
+    <div class="order-summary-container">
+        <div class="success-message">
+            <i class="fa-solid fa-circle-check"></i>
+            <h2>Thank You for Your Order!</h2>
+            <p>Your order has been placed successfully.</p>
+        </div>
+
+        <div class="order-details-card">
+            <h3>Order Details</h3>
+            <p><strong>Order ID:</strong> {{ order.id }}</p>
+            <p><strong>Total Amount Paid:</strong> ${{ order.final_price|floatformat:2 }}</p>
+            <p><strong>Estimated Delivery:</strong> {{ estimated_delivery_date }}</p>
+            <p><strong>Shipping Address:</strong> {{ order.address }}</p>
+        </div>
+
+        <div class="order-items-summary">
+            <h3>Items Ordered</h3>
+            {% if order_items %}
+                <ul>
+                {% for item in order_items %}
+                    <li>
+                        <div class="item-info">
+                            <img src="{{ item.product.image.url}}" alt="{{ item.product.title }}">
+                            <span>{{ item.product.title }} x {{ item.quantity }}</span>
+                        </div>
+                        <span class="item-price">${{ item.product.price|floatformat:2 }}</span>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No items found for this order.</p>
+            {% endif %}
+        </div>
+
+        <div class="order-actions">
+            <a href="#" class="btn btn-primary"><i class="fa-solid fa-truck"></i> Track Order</a>
+            <a href="{% url 'index' %}" class="btn btn-secondary"><i class="fa-solid fa-house"></i> Return to Homepage</a>
+        </div>
+    </div>
+</div>
+
+{% endblock categories %} 

@@ -51,10 +51,14 @@
             </tr>
             <tr class="checkout-row">
                 <td colspan="3" class="checkout-cell">
-                    <a href="" class="btn checkout-btn">
-                        <i class="fa-solid fa-lock"></i>
-                        Checkout
-                    </a>
+                    <form action="{% url 'checkout' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="total" value="{{ final_price|floatformat:2 }}">
+                        <button type="submit" class="btn checkout-btn">
+                            <i class="fa-solid fa-lock"></i>
+                            Checkout
+                        </button>
+                    </form>
                 </td>
             </tr>
         </table>

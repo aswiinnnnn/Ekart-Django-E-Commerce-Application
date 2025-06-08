@@ -5,6 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .models import Order, OrderedItem  # Assuming these models are defined in models.py
 from products.models import Product
 from customers.models import Customer
+from datetime import date, timedelta
 
 
 # Create your views here.
@@ -30,7 +31,7 @@ def show_cart(request):
                 })
             
             # Calculate tax and final price
-            tax = total_price * 0.18  # 18% tax
+            tax = total_price * 0.6  # 18% tax
             final_price = total_price + tax
             
             context = {
@@ -126,9 +127,29 @@ def checkout(request):
     if request.method == 'POST':
         user = request.user
         customer = user.customer_profile
-        total = int(request.POST.get(total))
+        total = float(request.POST.get('total')) # Convert to float to handle decimal val
         cart_obj= Order.objects.get(
                 owner=customer,
-                
+                order_status=Order.CART_STAGE
             )
+        if cart_obj.added_items.exists():
+            # Update order status to ORDER_CONFIRMED
+            cart_obj.order_status = Order.ORDER_CONFIRMED
+            cart_obj.final_price = total  # Save the final price to the order object
+            cart_obj.address = customer.address
+            cart_obj.save()
+            messages.success(request, "Order confirmed successfully.")
+
+            # Calculate estimated delivery date (e.g., 5 days from now)
+            estimated_delivery_date = date.today() + timedelta(days=5)
             
+            context = {
+                'order': cart_obj,  # Pass the actual Order object
+                'order_items': cart_obj.added_items.all(),
+                'estimated_delivery_date': estimated_delivery_date,
+            }
+            return render(request,'order_summary.html', context)
+        else:
+            messages.error(request, "Unable to confirm order. Some thing went wrong.")
+            return redirect('cart')
+
