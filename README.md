@@ -2,7 +2,7 @@
 
 ## 📌 Overview
 
-Ekart is a foundational e-commerce web application built using Django. It provides essential features like product browsing, shopping cart, user login, and a basic checkout system. This is ideal for learning how to build dynamic web apps with Django.
+Ekart is a simple e-commerce web app I built from scratch using Django. It includes features like product browsing, a shopping cart, user login, and a basic checkout. It's a personal project I made to learn how to build dynamic websites with Django.
 
 ---
 
