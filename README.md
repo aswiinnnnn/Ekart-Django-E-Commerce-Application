@@ -61,7 +61,7 @@ Ekart is a foundational e-commerce web application built using Django. It provid
 ### 🔄 1. Clone the Repository
 
 ```bash
-git clone [REPOSITORY_URL_HERE]
+git clone https://github.com/aswiinnnnn/Ekart-Django-E-Commerce-Application
 cd ekart
 
 ### 🧪 2. Create Virtual Environment
